@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IT_ELECTIVE_2_MIDTERM_Q1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+        /* Sidebar styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 280px;
+            z-index: 100;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+        /* Offset the main content area so it doesn't hide behind the sidebar */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        @@media (max-width: 991.98px) {
+            .sidebar {
+                position: static;
+                height: auto;
+                width: 100%;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left Sidebar Navigation -->
+    <div class="sidebar bg-dark d-flex flex-column p-4 text-white">
+        <a class="navbar-brand fw-bold text-info fs-3 mb-4 text-decoration-none" asp-controller="Weather" asp-action="Index">
+            IT Elective App
+        </a>
+        <hr class="text-secondary opacity-50 mb-3">
+
+        <ul class="nav nav-pills flex-column gap-2 mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-light fs-5 px-3 py-2 rounded-3 hover-bg" asp-controller="Profile" asp-action="Index">User Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light fs-5 px-3 py-2 rounded-3 hover-bg" asp-controller="Weather" asp-action="Index">Weather Forecast</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light fs-5 px-3 py-2 rounded-3 hover-bg" asp-controller="Activity" asp-action="Index">Activity Planner</a>
+            </li>
+        </ul>
+
+        <div class="footer text-muted small text-center mt-4">
+            &copy; 2026 - IT_ELECTIVE_2_MIDTERM_Q1
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
