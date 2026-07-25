@@ -40,32 +40,34 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IT_ELECTIVE_2_MIDTERM_Q1</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="profile">User Profile</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <!-- Left Sidebar Navigation -->
+    <div class="sidebar bg-dark d-flex flex-column p-4 text-white">
+        <a class="navbar-brand fw-bold text-info fs-3 mb-4 text-decoration-none" asp-controller="Weather" asp-action="Index">
+            IT Elective App
+        </a>
+        <hr class="text-secondary opacity-50 mb-3">
+
+        <ul class="nav nav-pills flex-column gap-2 mb-auto">
+            <li class="nav-item">
+                <a class="nav-link text-light fs-5 px-3 py-2 rounded-3 hover-bg" asp-controller="Profile" asp-action="Index">User Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light fs-5 px-3 py-2 rounded-3 hover-bg" asp-controller="Weather" asp-action="Index">Weather Forecast</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light fs-5 px-3 py-2 rounded-3 hover-bg" asp-controller="Activity" asp-action="Index">Activity Planner</a>
+            </li>
+        </ul>
+
+        <div class="footer text-muted small text-center mt-4">
+            &copy; 2026 - IT_ELECTIVE_2_MIDTERM_Q1
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <main role="main">
             @RenderBody()
         </main>
     </div>

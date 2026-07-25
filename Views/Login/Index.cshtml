@@ -1,33 +1,233 @@
-﻿@model IT_ELECTIVE_2_MIDTERM_Q1.Models.Login
-
-<h2 class="logtitle">Login</h2>
-
-<form asp-action="Index" method="post">
-    <div class="loginbody">
-        <div class="mb-3">
-            <label class="labels" asp-for="Username"></label>
-            <input asp-for="Username" class="form-control" />
-            <span asp-validation-for="Username" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label class="labels" asp-for="Password"></label>
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-
-        <span class="text-danger">@ViewBag.Error</span>
-
-        <br /><br />
-
-        <button type="submit" class="btn btn-close-white">
-            Login
-        </button>
-    </div>
-</form>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+﻿@{
+    Layout = null;
 }
+
+@model IT_ELECTIVE_2_MIDTERM_Q1.Models.Login
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather System Login</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient( rgba(13,110,253,0.85), rgba(11,61,145,0.95) ), url("https://images.unsplash.com/photo-1561553543-8d5f3f3c5f8b");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+
+        .login-card {
+            width: 430px;
+            padding: 40px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            animation: fadeIn 0.6s ease;
+        }
+
+
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+
+
+        .logo {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient( 135deg, #0d6efd, #00bfff );
+            color: white;
+            font-size: 40px;
+            box-shadow: 0 8px 20px rgba(13,110,253,.4);
+        }
+
+
+
+        .system-name {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 25px;
+            font-weight: 700;
+            color: #0b3d91;
+        }
+
+
+        .subtitle {
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+
+
+        .form-label {
+            font-weight: 600;
+            color: #0b3d91;
+        }
+
+
+
+        .form-control {
+            height: 50px;
+            border-radius: 15px;
+            padding-left: 18px;
+            border: 1px solid #cfd8e3;
+        }
+
+
+
+            .form-control:focus {
+                border-color: #0d6efd;
+                box-shadow: 0 0 0 .25rem rgba(13,110,253,.20);
+            }
+
+
+
+        .btn-login {
+            height: 50px;
+            border-radius: 15px;
+            border: none;
+            background: linear-gradient( 135deg, #0d6efd, #084298 );
+            font-size: 17px;
+            font-weight: 600;
+            transition: .3s;
+        }
+
+
+
+            .btn-login:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(13,110,253,.4);
+            }
+
+
+
+        .error-message {
+            display: block;
+            text-align: center;
+            color: #dc3545;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+
+
+        .footer-text {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #888;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-card">
+
+
+        <div class="logo">
+            ☁️
+        </div>
+
+
+        <div class="system-name">
+            Weather Monitoring System
+        </div>
+
+
+        <p class="subtitle">
+            Login to access weather information
+        </p>
+
+
+
+        <form asp-action="Index" method="post">
+
+
+            <div class="mb-3">
+
+                <label asp-for="Username" class="form-label">
+                </label>
+
+                <input asp-for="Username"
+                       class="form-control"
+                       placeholder="Username" />
+
+            </div>
+
+
+
+            <div class="mb-3">
+
+                <label asp-for="Password" class="form-label">
+                </label>
+
+                <input asp-for="Password"
+                       class="form-control"
+                       type="password"
+                       placeholder="Password" />
+
+            </div>
+
+
+
+            <span class="error-message">
+                @ViewBag.Error
+            </span>
+
+
+
+            <button class="btn btn-login text-white w-100 mt-3">
+
+                Login
+
+            </button>
+
+
+        </form>
+
+
+
+        <div class="footer-text">
+
+            IT ELECTIVE 2 • Weather Application
+
+        </div>
+
+
+    </div>
+
+
+</body>
+</html>
