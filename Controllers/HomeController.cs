@@ -23,6 +23,12 @@ namespace IT_ELECTIVE_2_MIDTERM_Q1.Controllers
             return View();
         }
 
+
+        public IActionResult profile()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

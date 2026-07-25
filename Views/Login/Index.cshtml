@@ -1,0 +1,33 @@
+﻿@model IT_ELECTIVE_2_MIDTERM_Q1.Models.Login
+
+<h2 class="logtitle">Login</h2>
+
+<form asp-action="Index" method="post">
+    <div class="loginbody">
+        <div class="mb-3">
+            <label class="labels" asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="labels" asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <span class="text-danger">@ViewBag.Error</span>
+
+        <br /><br />
+
+        <button type="submit" class="btn btn-close-white">
+            Login
+        </button>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

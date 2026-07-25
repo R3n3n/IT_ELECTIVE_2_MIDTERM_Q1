@@ -1,3 +1,5 @@
+
+
 html {
   font-size: 14px;
 }
@@ -19,4 +21,29 @@ html {
 
 body {
   margin-bottom: 60px;
+  background: #c6dbef;
+}
+
+.loginbody {
+    background: linear-gradient(135deg, #4facfe, #2171B5);
+    padding: 30px;
+    border-radius: 20px;
+    opacity: 70%;
+    max-width: 900px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+.logtitle{
+    text-align: center;
+    margin-bottom: 50px;
+    padding-top: 70px;
+}
+
+.labels{
+    color: white;
+}
+
+.form-control{
+    margin-bottom: 50px;
 }
