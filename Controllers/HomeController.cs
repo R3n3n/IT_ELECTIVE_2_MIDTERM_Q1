@@ -1,6 +1,7 @@
 using IT_ELECTIVE_2_MIDTERM_Q1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace IT_ELECTIVE_2_MIDTERM_Q1.Controllers
 {

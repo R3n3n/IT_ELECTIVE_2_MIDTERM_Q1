@@ -1,0 +1,62 @@
+﻿@model IT_ELECTIVE_2_MIDTERM_Q1.Models.WeatherViewModel
+
+@{
+    ViewData["Title"] = "Weather Forecast";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <!-- Search Card -->
+            <div class="card shadow-lg border-0 rounded-4 p-4 bg-white">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-primary mb-1">Weather Forecast</h2>
+                    <p class="text-muted small">Search any city worldwide for real-time conditions</p>
+                </div>
+
+                <form asp-action="Index" method="post" class="mb-3">
+                    <div class="input-group input-group-lg shadow-sm">
+                        <input type="text" name="city" class="form-control" placeholder="Enter city name..." required autocomplete="off" />
+                        <button class="btn btn-primary px-4 fw-semibold" type="submit">Search</button>
+                    </div>
+                </form>
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger border-0 shadow-sm rounded-3 mt-3 text-center py-2">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger m-0 small fw-medium" })
+                    </div>
+                }
+            </div>
+
+            <!-- Weather Result Card - ONLY displays when a valid city is loaded -->
+            @if (Model != null && !string.IsNullOrEmpty(Model.City))
+            {
+                <div class="card shadow-lg border-0 rounded-4 mt-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #0d6efd, #0dcaf0);">
+                    <div class="card-body p-4 text-center">
+
+                        <h3 class="card-title fw-bold display-6 mb-0 text-white">@Model.City</h3>
+
+                        @if (!string.IsNullOrEmpty(Model.Icon))
+                        {
+                            <div class="my-2">
+                                <img src="https://openweathermap.org/img/wn/@(Model.Icon)@@4x.png" alt="Weather Icon" style="width: 120px; height: 120px; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.2));" />
+                            </div>
+                        }
+
+                        <h1 class="display-3 fw-bold mb-1 text-white">@Math.Round(Model.Temperature)°C</h1>
+                        <p class="text-capitalize fs-5 fw-light text-white mb-4">@Model.Description</p>
+
+                        <div class="row bg-white bg-opacity-25 rounded-3 py-3 mx-1 g-0">
+                            <div class="col-12 text-center">
+                                <span class="small text-uppercase fw-semibold text-white d-block">Humidity</span>
+                                <span class="fs-4 fw-bold text-white">@Model.Humidity%</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
