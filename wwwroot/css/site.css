@@ -70,7 +70,7 @@ body {
 }
 
 .profile-header {
-    background: linear-gradient(135deg,#4e54c8,#8f94fb);
+    background: linear-gradient(135deg,#4facfe, #2171B5);
     color: white;
     text-align: center;
     padding: 35px;
@@ -80,7 +80,7 @@ body {
     width: 130px;
     height: 130px;
     border-radius: 50%;
-    border: 5px solid white;
+    border: 2px solid white;
     object-fit: cover;
     margin-bottom: 15px;
 }
