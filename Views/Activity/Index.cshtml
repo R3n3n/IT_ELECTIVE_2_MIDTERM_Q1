@@ -1,0 +1,208 @@
+﻿@using System.Linq
+@model List<IT_ELECTIVE_2_MIDTERM_Q1.Models.PlannerActivity>
+
+@{
+    ViewData["Title"] = "Activity Planner";
+
+    int year = 2026;
+    int month = 8;
+
+    DateTime firstDay = new DateTime(year, month, 1);
+    int daysInMonth = DateTime.DaysInMonth(year, month);
+    int startDay = (int)firstDay.DayOfWeek;
+
+    int currentDay = 1;
+}
+
+<style>
+
+    body {
+        background: #eef5ff;
+    }
+
+    .planner-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .page-title {
+        text-align: center;
+        margin: 35px 0 10px;
+        color: #0d6efd;
+        font-weight: bold;
+    }
+
+    .page-subtitle {
+        text-align: center;
+        color: #6c757d;
+        margin-bottom: 35px;
+    }
+
+    .calendar-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    }
+
+    .calendar {
+        margin: 0;
+    }
+
+        .calendar th {
+            background: linear-gradient(90deg,#0d6efd,#4dabf7);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 17px;
+        }
+
+        .calendar td {
+            height: 140px;
+            vertical-align: top;
+            padding: 10px;
+            background: white;
+            transition: .25s;
+        }
+
+            .calendar td:hover {
+                background: #edf5ff;
+            }
+
+    .day-number {
+        font-size: 18px;
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .activity-btn {
+        width: 100%;
+        margin-top: 12px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .empty {
+        background: #f8f9fa !important;
+    }
+
+</style>
+
+<div class="planner-container">
+
+    <h1 class="page-title">
+        🌤 Activity Planner
+    </h1>
+
+    <p class="page-subtitle">
+        Select an activity to check if the weather is suitable.
+    </p>
+
+    <div class="calendar-card">
+
+        <table class="table table-bordered calendar">
+
+            <thead>
+
+                <tr>
+
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @for (int week = 0; week < 6; week++)
+                {
+                    <tr>
+
+                        @for (int day = 0; day < 7; day++)
+                        {
+                            if (week == 0 && day < startDay)
+                            {
+                                <td class="empty"></td>
+                            }
+                            else if (currentDay > daysInMonth)
+                            {
+                                <td class="empty"></td>
+                            }
+                            else
+                            {
+                                var activity = Model.FirstOrDefault(a =>
+                                    a.ActivityDate.Day == currentDay &&
+                                    a.ActivityDate.Month == month &&
+                                    a.ActivityDate.Year == year);
+
+                                <td>
+
+                                    <div class="day-number">
+                                        @currentDay
+                                    </div>
+
+                                    @if (activity != null)
+                                    {
+                                        <a asp-controller="Activity"
+                                           asp-action="CheckWeather"
+                                           asp-route-date="@activity.ActivityDate.ToString("yyyy-MM-dd")"
+                                           class="btn btn-primary activity-btn">
+
+                                            @switch (activity.ActivityName)
+                                            {
+                                                case "Beach Trip":
+                                                    @:🏖️ Beach Trip
+                                                    break;
+
+                                                case "Mountain Hiking":
+                                                    @:🥾 Mountain Hiking
+                                                    break;
+
+                                                case "Camping":
+                                                    @:🏕️ Camping
+                                                    break;
+
+                                                case "Cycling":
+                                                    @:🚴 Cycling
+                                                    break;
+
+                                                case "Nature Walk":
+                                                    @:🌿 Nature Walk
+                                                    break;
+
+                                                default:
+                                                    @activity.ActivityName
+                                                    break;
+                                            }
+
+                                        </a>
+                                    }
+
+                                </td>
+
+                                currentDay++;
+                            }
+                        }
+
+                    </tr>
+
+                    if (currentDay > daysInMonth)
+                    {
+                        break;
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

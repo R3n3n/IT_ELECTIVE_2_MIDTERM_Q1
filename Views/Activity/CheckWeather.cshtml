@@ -1,0 +1,209 @@
+﻿@{
+    ViewData["Title"] = "Weather Check";
+}
+
+<style>
+
+    body {
+        background: #eef5ff;
+    }
+
+    .weather-container {
+        max-width: 750px;
+        margin: 50px auto;
+    }
+
+    .weather-card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,.10);
+    }
+
+    .weather-header {
+        background: linear-gradient(90deg,#0d6efd,#4dabf7);
+        color: white;
+        text-align: center;
+        padding: 30px;
+    }
+
+        .weather-header h2 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+    .weather-body {
+        background: white;
+        padding: 35px;
+    }
+
+    .info-card {
+        background: #f8fbff;
+        border-left: 5px solid #0d6efd;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 18px;
+    }
+
+    .info-title {
+        color: #0d6efd;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .weather-value {
+        font-size: 20px;
+        font-weight: bold;
+        color: #0d6efd;
+    }
+
+    .result-success {
+        background: #dbeafe;
+        color: #084298;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .result-fail {
+        background: #f8d7da;
+        color: #842029;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .back-btn {
+        margin-top: 25px;
+        width: 100%;
+        border-radius: 12px;
+        font-weight: bold;
+    }
+
+</style>
+
+<div class="weather-container">
+
+    <div class="weather-card">
+
+        <div class="weather-header">
+
+            <h2>🌤 Weather Activity Check</h2>
+
+            <p class="mb-0">
+                Check if your planned activity is suitable for today's weather.
+            </p>
+
+        </div>
+
+        <div class="weather-body">
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    🌳 Activity
+                </div>
+
+                <h4>@ViewBag.Activity.ActivityName</h4>
+
+            </div>
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    📅 Scheduled Date
+                </div>
+
+                @ViewBag.Activity.ActivityDate.ToString("MMMM dd, yyyy")
+
+            </div>
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    ☀ Preferred Weather
+                </div>
+
+                @ViewBag.Activity.PreferredWeather
+
+            </div>
+
+            <div class="info-card">
+
+                <div class="info-title">
+                    🌦 Weather Forecast
+                </div>
+
+                <div class="weather-value">
+
+                    @if (ViewBag.Forecast == "Clear")
+                    {
+                        <span>☀ Clear</span>
+                    }
+                    else if (ViewBag.Forecast == "Clouds")
+                    {
+                        <span>☁ Cloudy</span>
+                    }
+                    else if (ViewBag.Forecast == "Rainy")
+                    {
+                        <span>🌧 Rainy</span>
+                    }
+                    else
+                    {
+                        <span>@ViewBag.Forecast</span>
+                    }
+
+                </div>
+
+            </div>
+
+            @if (ViewBag.CanContinue)
+            {
+                <div class="result-success">
+
+                    ✅ Great news!
+
+                    <br /><br />
+
+                    The weather is suitable for your planned activity.
+
+                    <br />
+
+                    Have fun and stay safe!
+
+                </div>
+            }
+            else
+            {
+                <div class="result-fail">
+
+                    ❌ Weather Alert
+
+                    <br /><br />
+
+                    The current weather isn't ideal for this activity.
+
+                    <br />
+
+                    We recommend postponing it until conditions improve.
+
+                </div>
+            }
+
+            <a asp-controller="Activity"
+               asp-action="Index"
+               class="btn btn-primary btn-lg back-btn">
+
+                ← Return to Calendar
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
