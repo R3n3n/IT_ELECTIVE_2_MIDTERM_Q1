@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IT_ELECTIVE_2_MIDTERM_Q1.Models;
@@ -19,46 +21,44 @@ namespace IT_ELECTIVE_2_MIDTERM_Q1.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(new WeatherViewModel());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Index(string city)
-        {
-            if (string.IsNullOrEmpty(city))
-            {
-                ModelState.AddModelError("", "Please enter a city name.");
-                return View();
-            }
-
             string apiKey = _configuration["WeatherApiSettings:ApiKey"];
             string baseUrl = _configuration["WeatherApiSettings:BaseUrl"];
-            string url = $"{baseUrl}weather?q={city}&appid={apiKey}&units=metric";
+            string url = $"{baseUrl}forecast?q=Manila,PH&appid={apiKey}&units=metric";
 
             var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync(url);
 
+            var viewModel = new WeatherViewModel();
+
             if (response.IsSuccessStatusCode)
             {
                 string jsonString = await response.Content.ReadAsStringAsync();
-                JObject weatherData = JObject.Parse(jsonString);
+                JObject data = JObject.Parse(jsonString);
 
-                var viewModel = new WeatherViewModel
+                viewModel.City = "Philippines (Manila)";
+
+                var list = data["list"] as JArray;
+                if (list != null)
                 {
-                    City = weatherData["name"]?.ToString(),
-                    Temperature = weatherData["main"]?["temp"]?.Value<double>() ?? 0,
-                    Description = weatherData["weather"]?[0]?["description"]?.ToString(),
-                    Icon = weatherData["weather"]?[0]?["icon"]?.ToString(),
-                    Humidity = weatherData["main"]?["humidity"]?.Value<double>() ?? 0
-                };
+                    // Filters the 3-hour chunks down to 1 entry per day (midday) for the 5-day window
+                    var dailyList = list
+                        .Where(x => x["dt_txt"]?.ToString().Contains("12:00:00") == true)
+                        .Select(x => new DailyForecast
+                        {
+                            Date = System.DateTime.Parse(x["dt_txt"]?.ToString()).ToString("MMM dd, yyyy (ddd)"),
+                            Temperature = x["main"]?["temp"]?.Value<double>() ?? 0,
+                            Description = x["weather"]?[0]?["description"]?.ToString(),
+                            Icon = x["weather"]?[0]?["icon"]?.ToString(),
+                            Humidity = x["main"]?["humidity"]?.Value<double>() ?? 0
+                        }).Take(5).ToList();
 
-                return View(viewModel);
+                    viewModel.Forecasts = dailyList;
+                }
             }
 
-            ModelState.AddModelError("", "City not found or API error.");
-            return View();
+            return View(viewModel);
         }
     }
 }
